@@ -9,6 +9,9 @@ import xxl.core.exception.UnavailableFileException;
 import xxl.core.exception.UnrecognizedEntryException;
 
 // FIXME import classes
+import java.util.ArrayList;
+import java.io.*;
+import java.util.zip.*;
 
 /**
  * Class representing a spreadsheet application.
@@ -18,6 +21,9 @@ public class Calculator {
   private Spreadsheet _spreadsheet;
   
   // FIXME add more fields and methods if needed
+  private ArrayList<User> _users;
+
+  private ArrayList<Spreadsheet> _spreadsheets;
   
   /**
    * Return the current spreadsheet.
@@ -37,6 +43,7 @@ public class Calculator {
    */
   public void save() throws FileNotFoundException, MissingFileAssociationException, IOException {
     // FIXME implement serialization method
+
   }
   
   /**
@@ -50,6 +57,7 @@ public class Calculator {
    */
   public void saveAs(String filename) throws FileNotFoundException, MissingFileAssociationException, IOException {
     // FIXME implement serialization method
+    
   }
   
   /**
@@ -60,6 +68,7 @@ public class Calculator {
    */
   public void load(String filename) throws UnavailableFileException {
     // FIXME implement serialization method
+
   }
   
   /**
@@ -82,12 +91,21 @@ public class Calculator {
   }
 
   public void createNewSpreadsheet(int rows, int columns) {
-    //FIX ME
+    Spreadsheet s = new Spreadsheet(rows, columns);
+    _spreadsheets.add(s);
   }
 
-  /*
+  
   public boolean createUser(String name) {
-    //FIX ME
+    for (User u: _users){
+      if (u.getName()==name){
+        return false;
+      }
+    }
+    User u=new User(name);
+    _users.add(u);
+    return true;
+
   }
-  */
+  
 }
