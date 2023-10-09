@@ -15,8 +15,34 @@ public class Spreadsheet implements Serializable {
   private static final long serialVersionUID = 202308312359L;
   
   // FIXME define attributes
+  private int _rows;
+  private int _columns;
+  private Boolean _changed;
   // FIXME define contructor(s)
+  public Spreadsheet(int rows, int columns) {
+
+    _rows=rows;
+
+    _columns=columns;
+  }
   // FIXME define methods
+  /*
+  public List<Cell> getCutBuffer(){
+
+  }
+
+  public void copy(String range){
+
+  }
+
+  public void clear(String range){
+
+  }
+
+  public void addUser(User u){
+
+  }
+  */
   
   /**
    * Insert specified content in specified address.
