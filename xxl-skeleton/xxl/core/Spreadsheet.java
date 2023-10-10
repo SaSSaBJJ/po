@@ -1,6 +1,7 @@
 package xxl.core;
 
 // FIXME import classes
+import java.io.IOException;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -55,4 +56,16 @@ public class Spreadsheet implements Serializable {
   public void insertContent(int row, int column, String contentSpecification) throws UnrecognizedEntryException /* FIXME maybe add exceptions */ {
     //FIXME implement method
   }
+
+  void importFile(String txtfile) throws IOException, UnrecognizedEntryException {
+		try {
+			new Parser(this).parseFile(txtfile);
+		} catch (IOException e) {
+			throw e;
+		} catch (UnrecognizedEntryException e) {
+			throw e;
+		}
+	}
+
+  
 }

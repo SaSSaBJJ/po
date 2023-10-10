@@ -135,7 +135,7 @@ class Parser {
     throws UnrecognizedEntryException /* , more exceptions ? */ {
     Range range = _spredsheet.buildRange(rangeDescription);
     return switch (functionName) {
-      case "CONCAT" -> new Concat com range 
+      case "CONCAT" -> new Concat com range;
       case "COASLECE" -> new Coaslece com range;
       case "PRODUCT" -> new Product com range;
       case "AVERAGE" -> new Average com range;
