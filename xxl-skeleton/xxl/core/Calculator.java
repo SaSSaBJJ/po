@@ -9,6 +9,8 @@ import xxl.core.exception.UnavailableFileException;
 import xxl.core.exception.UnrecognizedEntryException;
 
 // FIXME import classes
+import java.util.ArrayList;
+import java.io.*;
 
 /**
  * Class representing a spreadsheet application.
@@ -18,6 +20,7 @@ public class Calculator {
   private Spreadsheet _spreadsheet;
   
   // FIXME add more fields and methods if needed
+  private String _filename="";
   
   /**
    * Return the current spreadsheet.
@@ -28,6 +31,14 @@ public class Calculator {
     return _spreadsheet;
   }
 
+  public String getFilename() {
+    return _filename;
+  }
+
+  public void setFilename(String filename) {
+		_filename = filename;
+	}
+
   /**
    * Saves the serialized application's state into the file associated to the current network.
    *
@@ -37,6 +48,14 @@ public class Calculator {
    */
   public void save() throws FileNotFoundException, MissingFileAssociationException, IOException {
     // FIXME implement serialization method
+    if (_filename == null) {
+			throw new MissingFileAssociationException();
+		}
+
+		try (ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(_filename))) {
+			objOut.writeObject(_filename);
+			objOut.writeObject(_spreadsheet);
+		}
   }
   
   /**
@@ -50,6 +69,8 @@ public class Calculator {
    */
   public void saveAs(String filename) throws FileNotFoundException, MissingFileAssociationException, IOException {
     // FIXME implement serialization method
+    _filename = filename;
+    save();
   }
   
   /**
@@ -57,9 +78,17 @@ public class Calculator {
    *        to load.
    * @throws UnavailableFileException if the specified file does not exist or there is
    *         an error while processing this file.
+   * @throws ClassNotFoundException
    */
-  public void load(String filename) throws UnavailableFileException {
+  public void load(String filename) throws UnavailableFileException, ClassNotFoundException {
     // FIXME implement serialization method
+    try (ObjectInputStream objIn = new ObjectInputStream(new FileInputStream(filename))) {
+			_filename = (String) objIn.readObject();
+			_spreadsheet = (Spreadsheet) objIn.readObject();
+
+		} catch (IOException e) {
+			throw new UnavailableFileException(filename);
+		}
   }
   
   /**
@@ -69,13 +98,26 @@ public class Calculator {
    * @throws ImportFileException
    */
   public void importFile(String filename) throws ImportFileException {
+
     try {
       // FIXME open import file and feed entries to new spreadsheet (in a cycle)
       //       each entry is inserted using insertContent of Spreadsheet. Set new
       // spreadsheet as the active one.
       // ....
+      _spreadsheet.importFile(filename);
+
     } catch (IOException | UnrecognizedEntryException /* FIXME maybe other exceptions */ e) {
       throw new ImportFileException(filename, e);
     }
-  } 
+  }
+
+  public void createNewSpreadsheet(int rows, int columns) {
+  
+  }
+
+  /*
+  public boolean createUser(String name) {
+    
+  }
+  */
 }
