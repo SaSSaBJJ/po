@@ -79,18 +79,17 @@ public class Spreadsheet implements Serializable {
    * @param contentSpecification the specification in a string format of the content to put
    *        in the specified cell.
    */
-  //public void insertContent(int row, int column, String contentSpecification) throws UnrecognizedEntryException /* FIXME maybe add exceptions */ {
-    //if (row > _rows | column > _columns | row < 0 | column < 0) {
-      /*throw new UnrecognizedEntryException("Célula não existe");
+  public void insertContent(int row, int column, String contentSpecification) throws UnrecognizedEntryException /* FIXME maybe add exceptions */ {
+    if (row > _rows | column > _columns | row <= 0 | column <= 0) {
+      throw new UnrecognizedEntryException("Célula não existe");
     }
 
-    for (Cell c: _cells) {
+    /*for (Cell c: _cells) {
       if (c.getRow()==row & c.getColumn()==column){
         c.setContent(contentSpecification.);
       }
-    }
-    
-  }*/
+    }*/
+  }
 
   void importFile(String txtfile) throws IOException, UnrecognizedEntryException {
 		try {
