@@ -12,7 +12,7 @@ public class User {
     public User(String n){
         _name=n;
     }
-
+    /*
     public Boolean equals(Object obj){
     
     }
@@ -20,6 +20,7 @@ public class User {
     public int hashCode(){
 
     }
+    */
 
     void add(Spreadsheet sheet){
         _spreadsheets.add(sheet);
