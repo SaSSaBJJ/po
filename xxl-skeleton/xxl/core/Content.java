@@ -12,14 +12,14 @@ public abstract class Content {
         return toString();
     }
 
-    /*  Method to return the content as an integer (assuming it's a valid integer)
+    //Method to return the content as an integer (assuming it's a valid integer)
     public int asInt() {
         Literal literal = value();
-        if (literal instanceof LiteralInt) {
-            return ((LiteralInt) literal).getValue();
+        if (literal instanceof LiteralInteger) {
+            return ((LiteralInteger) literal).getValue();
         } else {
             throw new UnsupportedOperationException("Content is not an integer.");
         }
-    }*/
+    }
 }
 

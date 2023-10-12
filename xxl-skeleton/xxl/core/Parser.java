@@ -43,7 +43,7 @@ class Parser {
       if (dimension[0].equals("linhas"))
         rows = Integer.parseInt(dimension[1]);
       else if (dimension[0].equals("colunas"))
-        columns = Integer.parseInt(contentdimension[1]);
+        columns = Integer.parseInt(dimension[1]);
       else
         throw new UnrecognizedEntryException(line);
     }
@@ -86,7 +86,7 @@ class Parser {
         int val = Integer.parseInt(literalExpression);
         return new literal Integer with val;
       } catch (NumberFormatException nfe) {
-        throw new UnrecognizedEntryException("Número inválido: " + expression);
+        throw new UnrecognizedEntryException("Número inválido: " + literalExpression);
       }
     }
   }
@@ -111,14 +111,14 @@ class Parser {
   private Content parseBinaryFunction(String functionName, String args) throws UnrecognizedEntryException /* , more Exceptions */ {
     String[] arguments = args.split(",");
     Content arg0 = parseArgumentExpression(arguments[0]);
-    Content arg1 = parseArgumentExpression(argarguments[1]);
+    Content arg1 = parseArgumentExpression(arguments[1]);
     
     return switch (functionName) {
       case "ADD" -> new Add function with (arg0, arg1);
       case "SUB" -> new Sub function with (arg0, arg1);
       case "MUL" -> new Mul function with (arg0, arg1);
       case "DIV" -> new Div function with (arg0, arg1);
-      default -> dar erro com função inválida: functionName ;
+      default -> throw new UnrecognizedEntryException("função inválida: " + functionName);
     };
   }
 
