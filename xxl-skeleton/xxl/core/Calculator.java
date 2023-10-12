@@ -9,7 +9,6 @@ import xxl.core.exception.UnavailableFileException;
 import xxl.core.exception.UnrecognizedEntryException;
 
 // FIXME import classes
-import java.util.ArrayList;
 import java.io.*;
 
 /**

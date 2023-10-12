@@ -2,6 +2,7 @@ package xxl.core;
 
 // FIXME import classes
 import java.io.IOException;
+import java.util.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -17,8 +18,15 @@ public class Spreadsheet implements Serializable {
   
   // FIXME define attributes
   private int _rows;
+
   private int _columns;
+
   private Boolean _changed;
+
+  private TreeMap<String, User> _users;
+
+  private List<Cell> _cells;
+
   // FIXME define contructor(s)
   public Spreadsheet(int rows, int columns) {
 
@@ -26,24 +34,42 @@ public class Spreadsheet implements Serializable {
 
     _columns=columns;
   }
-  // FIXME define methods
-  /*
-  public List<Cell> getCutBuffer(){
 
+  // FIXME define methods
+  public int getRows(){
+    return _rows;
   }
 
-  public void copy(String range){
+  public int getColumns(){
+    return _columns;
+  }
 
+  public Boolean isChanged() {
+    return _changed;
+  }
+
+  /* FIX ME
+  public List<Cell> getCutBuffer(){
+    
+  }
+  */
+
+  public void copy(String range){
+    //FIX ME
   }
 
   public void clear(String range){
-
+    //FIX ME
   }
 
-  public void addUser(User u){
-
+  public void addUser(User user){
+    _users.put(user.getName(), user);
   }
-  */
+
+  Collection<User> getUsers(){
+    return new ArrayList<User>(_users.values());
+  }
+  
   
   /**
    * Insert specified content in specified address.
@@ -54,7 +80,19 @@ public class Spreadsheet implements Serializable {
    *        in the specified cell.
    */
   public void insertContent(int row, int column, String contentSpecification) throws UnrecognizedEntryException /* FIXME maybe add exceptions */ {
-    //FIXME implement method
+    if (row > _rows | column > _columns | row < 0 | column < 0) {
+      throw new UnrecognizedEntryException("Célula não existe");
+    }
+    
+    
+
+    for (Cell c: _cells) {
+      if (c.getRow()==row & c.getColumn()==column){
+        c.setContent(row, column, contentSpecification);
+      }
+    }
+
+
   }
 
   void importFile(String txtfile) throws IOException, UnrecognizedEntryException {
