@@ -13,6 +13,7 @@ public abstract class Content {
     }
 
     //Method to return the content as an integer (assuming it's a valid integer)
+    /*
     public int asInt() {
         Literal literal = value();
         if (literal instanceof LiteralInteger) {
@@ -21,5 +22,6 @@ public abstract class Content {
             throw new UnsupportedOperationException("Content is not an integer.");
         }
     }
+    */
 }
 
