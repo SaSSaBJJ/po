@@ -63,7 +63,7 @@ class Parser {
     if (components.length == 2) {
       String[] address = components[0].split(";");
       Content content = parseContent(components[1]);
-      _spreadsheet.insert(Integer.parseInt(address[0]), Integer.parseInt(address[1]), content);
+      _spreadsheet.insertContent(Integer.parseInt(address[0]), Integer.parseInt(address[1]), content.asString());
     } else
       throw new UnrecognizedEntryException("Wrong format in line: " + line);
   }
@@ -96,8 +96,8 @@ class Parser {
     if (contentSpecification.contains("("))
       return parseFunction(contentSpecification);
     // It is a reference
-    String[] address = contentSpecificationaddress.split(";");
-    return new Referência at Integer.parseInt(address[0].trim()), Integer.parseInt(address[1]);
+    String[] address = contentSpecification.split(";");
+    return new Reference(Integer.parseInt(address[0].trim()), Integer.parseInt(address[1]));
   }
 
   private Content parseFunction(String functionSpecification) throws UnrecognizedEntryException /*more exceptions */ {
@@ -114,10 +114,10 @@ class Parser {
     Content arg1 = parseArgumentExpression(arguments[1]);
     
     return switch (functionName) {
-      case "ADD" -> new Add function with (arg0, arg1);
-      case "SUB" -> new Sub function with (arg0, arg1);
-      case "MUL" -> new Mul function with (arg0, arg1);
-      case "DIV" -> new Div function with (arg0, arg1);
+      case "ADD" -> new Add(arg0, arg1);
+      case "SUB" -> new Sub(arg0, arg1);
+      case "MUL" -> new Mul(arg0, arg1);
+      case "DIV" -> new Div(arg0, arg1);
       default -> throw new UnrecognizedEntryException("função inválida: " + functionName);
     };
   }
@@ -125,7 +125,7 @@ class Parser {
   private Content parseArgumentExpression(String argExpression) throws UnrecognizedEntryException {
     if (argExpression.contains(";")  && argExpression.charAt(0) != '\'') {
       String[] address = argExpression.split(";");
-      return new referência at Integer.parseInt(address[0].trim()), Integer.parseInt(address[1]);
+      return new Reference(Integer.parseInt(address[0].trim()), Integer.parseInt(address[1]));
       // pode ser diferente do anterior em parseContentExpression
     } else
       return parseLiteral(argExpression);
@@ -133,14 +133,14 @@ class Parser {
 
   private Content parseIntervalFunction(String functionName, String rangeDescription)
     throws UnrecognizedEntryException /* , more exceptions ? */ {
-    Range range = _spredsheet.buildRange(rangeDescription);
+    Range range = _spreadsheet.createRange(rangeDescription);
     return switch (functionName) {
       case "CONCAT" -> new Concat com range;
       case "COALESCE" -> new Coalesce com range;
       case "PRODUCT" -> new Product com range;
       case "AVERAGE" -> new Average com range;
-      default -> dar erro com função inválida: functionName;
-    };
+      default -> throw new UnrecognizedEntryException("Função Inválida: " + functionName);
+    }
   }
 
   /* Na classe Spreadsheet preciso de algo com a seguinte funcionalidade

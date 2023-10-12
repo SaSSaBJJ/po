@@ -1,21 +1,34 @@
 package xxl.core;
 
 public class Add extends BinaryFunction {
-    //review whole class
-    protected Literal compute() {
-        return null;
-        
+
+    private Content _arg1;
+
+    private Content _arg2;
+
+    public Add(Content a, Content b) {
+        super("ADD");
+        _arg1=a;
+        _arg2=b;
+    }
+
+    @Override
+    public Literal compute() {
+
+        Literal _operand1 = _arg1.value();
+        Literal _operand2 = _arg2.value();
+
+        int result = _operand1.asInt() + _operand2.asInt();
+        return new LiteralInteger(result);
     }
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+        return compute().toString();
     }
 
     @Override
     Literal value() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'value'");
+        return compute();
     }
 }

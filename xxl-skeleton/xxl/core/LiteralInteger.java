@@ -7,12 +7,21 @@ public class LiteralInteger extends Literal{
         _value = value;
     }
 
+    @Override
     public String toString() {
+        return  asString();
+    }
+
+    public String asString() {
         return  Integer.toString(_value);
     }
 
+    public int asInt() {
+        return _value;
+    }
+
     Literal value() {
-        // Return this instance since it represents the literal value
         return this;
     }
+    
 }

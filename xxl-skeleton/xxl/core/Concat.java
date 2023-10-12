@@ -9,13 +9,11 @@ public class Concat extends IntervalFunction {
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+        
     }
 
     @Override
     Literal value() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'value'");
+        
     }
 }
