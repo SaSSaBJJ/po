@@ -21,7 +21,6 @@ public class LiteralString extends Literal{
             int _asInt = Integer.parseInt(_value);
             return _asInt;
         } catch (NumberFormatException e) {
-            System.out.println("Invalid integer input: " + _value);
             return 0;
         }
     }

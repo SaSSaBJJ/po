@@ -100,12 +100,10 @@ public class Spreadsheet implements Serializable {
     if (row > _rows | column > _columns | row <= 0 | column <= 0) {
       throw new UnrecognizedEntryException("Célula não existe");
     }
-    /*
-    for (Cell c: _cells) {
+    
+    /*for (Cell c: _cells) {
       if (c.getRow()==row & c.getColumn()==column){
-        char c = contentSpecification.charAt(0);
-        if (c )
-      }
+        
     }*/
   }
 
