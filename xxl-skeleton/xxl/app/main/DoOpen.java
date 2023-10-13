@@ -15,14 +15,15 @@ class DoOpen extends Command<Calculator> {
 
   DoOpen(Calculator receiver) {
     super(Label.OPEN, receiver);
+    addStringField("file", Message.openFile());
   }
   
   @Override
   protected final void execute() throws CommandException {
-    String filename = stringField("file");
+    String filename = Form.requestString(Message.openFile());
     try {
       _receiver.load(filename);
-    } catch (UnavailableFileException | FileOpenFailedException e) {
+    } catch (UnavailableFileException | ClassNotFoundException e) {
       throw new FileOpenFailedException(e);
     }
   }
