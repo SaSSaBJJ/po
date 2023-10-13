@@ -25,7 +25,7 @@ class DoShow extends Command<Spreadsheet> {
     try {
       _display.addAll(_receiver.getCellsInRange(_receiver.createRange(range))).display();
     } 
-    catch (InvalidCellRangeException e) {
+    catch (InvalidCellRangeException | UnrecognizedEntryException e) {
       throw new InvalidCellRangeException(e.getInvalidRange());
     }
   }
