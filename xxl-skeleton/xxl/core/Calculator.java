@@ -10,6 +10,7 @@ import xxl.core.exception.UnrecognizedEntryException;
 
 // FIXME import classes
 import java.io.*;
+import java.util.*;
 
 /**
  * Class representing a spreadsheet application.
@@ -37,6 +38,34 @@ public class Calculator {
   public void setFilename(String filename) {
 		_filename = filename;
 	}
+
+  public int getRows(){
+    return _spreadsheet.getRows();
+  }
+
+  public int getColumns(){
+    return _spreadsheet.getColumns();
+  }
+
+  public Boolean isChanged() {
+    return _spreadsheet.isChanged();
+  }
+
+  Collection<User> getUsers(){
+    return _spreadsheet.getUsers();
+  }
+
+  List<Cell> getCells(){
+    return _spreadsheet.getCells();
+  }
+
+  List<Cell> getCellsInRange(Range range) {
+    return _spreadsheet.getCellsInRange(range);
+  }
+
+  public Cell getCell(int row, int column) throws UnrecognizedEntryException {
+    return _spreadsheet.getCell(row, column);
+  }
 
   /**
    * Saves the serialized application's state into the file associated to the current network.
@@ -99,13 +128,8 @@ public class Calculator {
   public void importFile(String filename) throws ImportFileException {
 
     try {
-      // FIXME open import file and feed entries to new spreadsheet (in a cycle)
-      //       each entry is inserted using insertContent of Spreadsheet. Set new
-      // spreadsheet as the active one.
-      // ....
       _spreadsheet.importFile(filename);
-
-    } catch (IOException | UnrecognizedEntryException /* FIXME maybe other exceptions */ e) {
+    } catch (IOException | UnrecognizedEntryException e) {
       throw new ImportFileException(filename, e);
     }
   }
@@ -127,4 +151,11 @@ public class Calculator {
     
   }
 
+  Range createRange(String range) throws UnrecognizedEntryException {
+    return _spreadsheet.createRange(range);
+  }
+
+  public void insertContent(int row, int column, String contentSpecification) throws UnrecognizedEntryException /* FIXME maybe add exceptions */ {
+    _spreadsheet.insertContent(row, column, contentSpecification);
+  }
 }

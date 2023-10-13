@@ -73,6 +73,19 @@ public class Spreadsheet implements Serializable {
   List<Cell> getCells(){
     return _cells;
   }
+
+  List<Cell> getCellsInRange(Range range) {
+    return range.getCells();
+  }
+
+  public Cell getCell(int row, int column) throws UnrecognizedEntryException {
+    for (Cell c: _cells) {
+      if (c.getRow()==row & c.getColumn()==column) {
+        return c;
+      }
+    }
+    throw new UnrecognizedEntryException("Célula não existe");
+  }
   
   
   /**
@@ -87,10 +100,11 @@ public class Spreadsheet implements Serializable {
     if (row > _rows | column > _columns | row <= 0 | column <= 0) {
       throw new UnrecognizedEntryException("Célula não existe");
     }
-
-    /*for (Cell c: _cells) {
+    /*
+    for (Cell c: _cells) {
       if (c.getRow()==row & c.getColumn()==column){
-        c.setContent(contentSpecification.);
+        char c = contentSpecification.charAt(0);
+        if (c )
       }
     }*/
   }

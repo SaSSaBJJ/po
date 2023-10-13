@@ -20,7 +20,7 @@ public class Cell {
 
     // toString method to represent the cell as a string
     public String toString() {
-        return  _row + ";" + _column;
+        return  _row + ";" + _column + "|" +  _content.toString();
     }
 
     protected void setContent(Content c) {

@@ -36,7 +36,13 @@ public class Range {
     }
     
     List<Cell> getCells() {
-        return _spreadsheet.getCells();
+        List <Cell>_cellsInRange = new ArrayList<Cell>();
+        for (Cell c: _spreadsheet.getCells()) { 
+            if (c.getRow() >= _firstRow & c.getRow() <= _lastRow & c.getColumn() >= _firstColumn & c.getColumn() <= _lastColumn) {
+                _cellsInRange.add(c);
+            }
+        }
+        return _cellsInRange;
     }
     
 }
