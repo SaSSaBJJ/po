@@ -20,7 +20,7 @@ class DoOpen extends Command<Calculator> {
   
   @Override
   protected final void execute() throws CommandException {
-    String filename = stringField(Message.openFile());
+    String filename = stringField("file");
     try {
       _receiver.load(filename);
     } catch (UnavailableFileException | ClassNotFoundException e) {

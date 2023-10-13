@@ -20,6 +20,13 @@ public class Calculator {
   private Spreadsheet _spreadsheet;
   
   // FIXME add more fields and methods if needed
+  public void createNewSpreadsheet(int rows, int columns) {
+    _spreadsheet = new Spreadsheet(rows, columns);
+  }
+
+  /**
+   * String storing filename
+   */
   private String _filename="";
   
   /**
@@ -31,41 +38,82 @@ public class Calculator {
     return _spreadsheet;
   }
 
+  /**
+   * 
+   * @returns filename
+   */
   public String getFilename() {
     return _filename;
   }
 
+  /**
+   * 
+   * @param filename name of the file
+   */
   public void setFilename(String filename) {
 		_filename = filename;
 	}
-
+  
+  /**
+   * 
+   * @return number of rows
+   */
   public int getRows(){
     return _spreadsheet.getRows();
   }
 
+  /**
+   * 
+   * @return number of columns
+   */
   public int getColumns(){
     return _spreadsheet.getColumns();
   }
 
+  /**
+   * 
+   * @returns true if a spreadsheet was changed
+   */
   public Boolean isChanged() {
     return _spreadsheet.isChanged();
   }
 
+  /**
+   * 
+   * @returns all users
+   */
   Collection<User> getUsers(){
     return _spreadsheet.getUsers();
   }
 
+  /**
+   * 
+   * @param row row of the cell
+   * @param column column of the cell
+   * @returns the cell
+   * @throws UnrecognizedEntryException
+   */
+  public Cell getCell(int row, int column) throws UnrecognizedEntryException {
+    return _spreadsheet.getCell(row, column);
+  }
+  
+  /**
+   * 
+   * @returns all cells
+   */
   List<Cell> getCells(){
     return _spreadsheet.getCells();
   }
 
+  /**
+   * 
+   * @param range
+   * @return cells in that range
+   */
   List<Cell> getCellsInRange(Range range) {
     return _spreadsheet.getCellsInRange(range);
   }
 
-  public Cell getCell(int row, int column) throws UnrecognizedEntryException {
-    return _spreadsheet.getCell(row, column);
-  }
 
   /**
    * Saves the serialized application's state into the file associated to the current network.
@@ -75,7 +123,6 @@ public class Calculator {
    * @throws IOException if there is some error while serializing the state of the network to disk.
    */
   public void save() throws FileNotFoundException, MissingFileAssociationException, IOException {
-    // FIXME implement serialization method
     if (_filename == null) {
 			throw new MissingFileAssociationException();
 		}
@@ -96,7 +143,6 @@ public class Calculator {
    * @throws IOException if there is some error while serializing the state of the network to disk.
    */
   public void saveAs(String filename) throws FileNotFoundException, MissingFileAssociationException, IOException {
-    // FIXME implement serialization method
     _filename = filename;
     save();
   }
@@ -109,7 +155,6 @@ public class Calculator {
    * @throws ClassNotFoundException
    */
   public void load(String filename) throws UnavailableFileException, ClassNotFoundException {
-    // FIXME implement serialization method
     try (ObjectInputStream objIn = new ObjectInputStream(new FileInputStream(filename))) {
 			_filename = (String) objIn.readObject();
 			_spreadsheet = (Spreadsheet) objIn.readObject();
@@ -134,11 +179,12 @@ public class Calculator {
     }
   }
 
-  public void createNewSpreadsheet(int rows, int columns) {
-    _spreadsheet = new Spreadsheet(rows, columns);
-  }
-
-
+  /**
+   * 
+   * @param name name of the user
+   * @returns true if user was successfully created
+   * @throws UnrecognizedEntryException
+   */
   public boolean createUser(String name) throws UnrecognizedEntryException {
     User newUser = new User(name);
     for (User u: _spreadsheet.getUsers()){
@@ -151,10 +197,23 @@ public class Calculator {
     
   }
 
+  /**
+   * 
+   * @param range as a string
+   * @returns range as Range
+   * @throws UnrecognizedEntryException
+   */
   Range createRange(String range) throws UnrecognizedEntryException {
     return _spreadsheet.createRange(range);
   }
 
+  /**
+   * 
+   * @param row row of the cell
+   * @param column column of the cell
+   * @param contentSpecification content to insert in the cell
+   * @throws UnrecognizedEntryException
+   */
   public void insertContent(int row, int column, String contentSpecification) throws UnrecognizedEntryException /* FIXME maybe add exceptions */ {
     _spreadsheet.insertContent(row, column, contentSpecification);
   }

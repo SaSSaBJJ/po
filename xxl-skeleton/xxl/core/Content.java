@@ -1,7 +1,5 @@
 package xxl.core;
 
-import xxl.core.exception.UnrecognizedEntryException;
-
 public abstract class Content {
     // Abstract method to return a string representation of the content
     public abstract String toString();

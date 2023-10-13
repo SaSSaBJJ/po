@@ -24,14 +24,12 @@ public class Sub extends BinaryFunction {
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+        return compute().toString();
     }
 
     @Override
     Literal value() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'value'");
+        return compute();
     }
     
 }

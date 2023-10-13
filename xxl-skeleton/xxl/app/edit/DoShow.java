@@ -1,5 +1,7 @@
 package xxl.app.edit;
 
+import java.io.IOException;
+
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import xxl.app.exception.InvalidCellRangeException;
@@ -20,13 +22,13 @@ class DoShow extends Command<Spreadsheet> {
   
   @Override
   protected final void execute() throws CommandException {
-    // FIXME implement command
-    String range = stringField("range");
+
     try {
-      _display.addAll(_receiver.getCellsInRange(_receiver.createRange(range))).display();
+      _display.popup(_receiver.getCellsInRange(_receiver.createRange(stringField("range"))));
+      
     } 
     catch (UnrecognizedEntryException e) {
-      throw new InvalidCellRangeException(range);
+      throw new InvalidCellRangeException(stringField("range"));
     }
   }
 }

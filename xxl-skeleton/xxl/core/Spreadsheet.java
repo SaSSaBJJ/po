@@ -16,7 +16,6 @@ public class Spreadsheet implements Serializable {
   @Serial
   private static final long serialVersionUID = 202308312359L;
   
-  // FIXME define attributes
   private int _rows;
 
   private int _columns;
@@ -25,17 +24,25 @@ public class Spreadsheet implements Serializable {
 
   private TreeMap<String, User> _users;
 
-  private List<Cell> _cells;
+  private List<List<Cell>> _cells;
 
-  // FIXME define contructor(s)
   public Spreadsheet(int rows, int columns) {
 
     _rows=rows;
 
     _columns=columns;
+
+    _cells=new ArrayList<>();
+
+    for (int row = 0; row < _rows; row++) {
+      List<Cell> rowCells = new ArrayList<>();
+      for (int col = 0; col < _columns; col++) {
+          rowCells.add(new Cell(row, col, null));
+      }
+      _cells.add(rowCells);
+    }
   }
 
-  // FIXME define methods
   public int getRows(){
     return _rows;
   }
@@ -70,23 +77,24 @@ public class Spreadsheet implements Serializable {
     return new ArrayList<User>(_users.values());
   }
 
-  List<Cell> getCells(){
-    return _cells;
+  public Cell getCell(int row, int column) throws UnrecognizedEntryException {
+    return _cells.get(row).get(column);
   }
+
+  public List<Cell> getCells() {
+    List<Cell> allCells = new ArrayList<>();
+
+    for (List<Cell> rowCells : _cells) {
+        allCells.addAll(rowCells);
+    }
+
+    return allCells;
+}
 
   public List<Cell> getCellsInRange(Range range) {
     return range.getCells();
   }
 
-  public Cell getCell(int row, int column) throws UnrecognizedEntryException {
-    for (Cell c: _cells) {
-      if (c.getRow()==row & c.getColumn()==column) {
-        return c;
-      }
-    }
-    throw new UnrecognizedEntryException("Célula não existe");
-  }
-  
   
   /**
    * Insert specified content in specified address.
