@@ -69,6 +69,10 @@ public class Spreadsheet implements Serializable {
   Collection<User> getUsers(){
     return new ArrayList<User>(_users.values());
   }
+
+  List<Cell> getCells(){
+    return _cells;
+  }
   
   
   /**
@@ -94,12 +98,35 @@ public class Spreadsheet implements Serializable {
   void importFile(String txtfile) throws IOException, UnrecognizedEntryException {
 		try {
 			new Parser(this).parseFile(txtfile);
-		} catch (IOException e) {
-			throw e;
-		} catch (UnrecognizedEntryException e) {
+		}
+    catch (IOException | UnrecognizedEntryException e) {
 			throw e;
 		}
-	}
+  }
+
+  Range createRange(String range) throws UnrecognizedEntryException {
+    String[] rangeCoordinates;
+    int firstRow, firstColumn, lastRow, lastColumn;
+    
+    if (range.indexOf(':') != -1) {
+      rangeCoordinates = range.split("[:;]");
+      firstRow = Integer.parseInt(rangeCoordinates[0]);
+      firstColumn = Integer.parseInt(rangeCoordinates[1]);
+      lastRow = Integer.parseInt(rangeCoordinates[2]);
+      lastColumn = Integer.parseInt(rangeCoordinates[3]);
+    } else {
+      rangeCoordinates = range.split(";");
+      firstRow = lastRow = Integer.parseInt(rangeCoordinates[0]);
+      firstColumn = lastColumn = Integer.parseInt(rangeCoordinates[1]);
+    }
+
+    if (firstRow <=0 | firstColumn <= 0 | lastRow < firstRow | lastColumn < firstColumn) {
+      throw new UnrecognizedEntryException("Range Inválido"); 
+    }
+    // check if coordinates are valid
+    // if yes
+    return new Range(firstRow, firstColumn, lastRow, lastColumn); //and spreadsheet;
+  }
 
   
 }

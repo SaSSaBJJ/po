@@ -1,21 +1,29 @@
 package xxl.core;
 
 public class Coalesce extends IntervalFunction {
-    //review whole class
-    protected Literal compute() {
-        return null;
-        
+    private Range _range;
+
+    public Coalesce(Range range) {
+
+        super("COALESCE");
+
+        _range = range;
     }
 
     @Override
+    public Literal compute() {
+        //FIX ME
+        return null;
+    }
+        
+
+    @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+        return compute().toString();
     }
 
     @Override
     Literal value() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'value'");
+        return compute();
     }
 }

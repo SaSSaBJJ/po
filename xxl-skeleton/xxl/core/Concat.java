@@ -1,21 +1,30 @@
 package xxl.core;
 
 public class Concat extends IntervalFunction {
-    //review the whole class, made just so it compiles
-    protected Literal compute() {
-        return null;
-        
+    
+    private Range _range;
+
+    public Concat(Range range) {
+
+        super("CONCAT");
+
+        _range = range;
     }
 
     @Override
+    public Literal compute() {
+        //FIX ME
+        return null;
+    }
+        
+
+    @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+        return compute().toString();
     }
 
     @Override
     Literal value() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'value'");
+        return compute();
     }
 }
