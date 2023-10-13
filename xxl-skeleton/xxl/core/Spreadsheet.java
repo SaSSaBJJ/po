@@ -74,7 +74,7 @@ public class Spreadsheet implements Serializable {
     return _cells;
   }
 
-  List<Cell> getCellsInRange(Range range) {
+  public List<Cell> getCellsInRange(Range range) {
     return range.getCells();
   }
 
@@ -116,7 +116,7 @@ public class Spreadsheet implements Serializable {
 		}
   }
 
-  Range createRange(String range) throws UnrecognizedEntryException {
+  public Range createRange(String range) throws UnrecognizedEntryException {
     String[] rangeCoordinates;
     int firstRow, firstColumn, lastRow, lastColumn;
     

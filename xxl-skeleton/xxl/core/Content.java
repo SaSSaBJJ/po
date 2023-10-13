@@ -16,7 +16,7 @@ public abstract class Content {
 
     //Method to return the content as an integer (assuming it's a valid integer)
     
-    public int asInt() throws UnrecognizedEntryException {
+    public int asInt() {
         Literal literal = value();
         if (literal instanceof LiteralInteger) {
             return ((LiteralInteger) literal).asInt();
