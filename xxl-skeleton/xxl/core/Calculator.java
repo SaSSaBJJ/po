@@ -111,12 +111,20 @@ public class Calculator {
   }
 
   public void createNewSpreadsheet(int rows, int columns) {
-  
+    _spreadsheet = new Spreadsheet(rows, columns);
   }
 
-  /*
-  public boolean createUser(String name) {
+
+  public boolean createUser(String name) throws UnrecognizedEntryException {
+    User newUser = new User(name);
+    for (User u: _spreadsheet.getUsers()){
+      if (u.getName().equals(name)){
+        throw new UnrecognizedEntryException("Nome duplicado: " + name);
+      }
+    }
+    _spreadsheet.addUser(newUser);
+    return true;
     
   }
-  */
+
 }
