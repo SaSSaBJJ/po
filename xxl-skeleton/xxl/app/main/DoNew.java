@@ -1,5 +1,7 @@
 package xxl.app.main;
 
+import java.io.IOException;
+
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
@@ -16,6 +18,13 @@ class DoNew extends Command<Calculator> {
   
   @Override
   protected final void execute() throws CommandException {
-    // FIXME implement command
+    // pode nao estar bem
+    String filename = Form.requestString("Enter the name of the new file:");
+    
+    try {
+      _receiver.createNewFile(filename);
+    } catch (IOException e) {
+      return;
+    }
   }
 }
