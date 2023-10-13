@@ -2,14 +2,17 @@ package xxl.core;
 
 public abstract class IntervalFunction extends Function {
 
-    public IntervalFunction(String name) {
+   private String _name;
+
+    public IntervalFunction(String name){
         super(name);
-        //TODO Auto-generated constructor stub
+    }
+
+    protected abstract Literal compute();
+
+    @Override
+    public String toString(){
+        return _name;
     }
     
-    /* FIX ME
-    public String toString(){
-
-    }
-    */
 }

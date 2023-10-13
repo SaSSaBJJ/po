@@ -1,18 +1,29 @@
 package xxl.core;
 
 public class Coalesce extends IntervalFunction {
-    //review whole class
-    protected Literal compute() {
-        return null;
-        
+    private Range _range;
+
+    public Coalesce(Range range) {
+
+        super("COALESCE");
+
+        _range = range;
     }
 
     @Override
-    public String toString() {
+    public Literal compute() {
+        //FIX ME
+        return null;
+    }
         
 
     @Override
+    public String toString() {
+        return compute().toString();
+    }
+
+    @Override
     Literal value() {
-       
+        return compute();
     }
 }

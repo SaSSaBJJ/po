@@ -98,14 +98,13 @@ public class Spreadsheet implements Serializable {
   void importFile(String txtfile) throws IOException, UnrecognizedEntryException {
 		try {
 			new Parser(this).parseFile(txtfile);
-		} catch (IOException e) {
-			throw e;
-		} catch (UnrecognizedEntryException e) {
+		}
+    catch (IOException | UnrecognizedEntryException e) {
 			throw e;
 		}
-	}
+  }
 
-  Range createRange(String range) throws ? {
+  Range createRange(String range) throws UnrecognizedEntryException {
     String[] rangeCoordinates;
     int firstRow, firstColumn, lastRow, lastColumn;
     
@@ -121,9 +120,12 @@ public class Spreadsheet implements Serializable {
       firstColumn = lastColumn = Integer.parseInt(rangeCoordinates[1]);
     }
 
+    if (firstRow <=0 | firstColumn <= 0 | lastRow < firstRow | lastColumn < firstColumn) {
+      throw new UnrecognizedEntryException("Range Inválido"); 
+    }
     // check if coordinates are valid
     // if yes
-    return new Range with firstRow, firstColumn, lastRow, lastColumn and spreadsheet;
+    return new Range(firstRow, firstColumn, lastRow, lastColumn); //and spreadsheet;
   }
 
   

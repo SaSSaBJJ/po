@@ -34,18 +34,25 @@ class Parser {
     return _spreadsheet;
   }
 
-  private void parseDimensions(Reader reader) {
+  //might be wrong because of changes
+  private void parseDimensions(Reader reader) throws UnrecognizedEntryException, IOException {
     int rows = -1;
     int columns = -1;
+
+    try(BufferedReader bufferedReader = new BufferedReader(reader)) {
     
-    for (int i = 0; i < 2; i++) {
-      String[] dimension = reader.readLine().split("=");
-      if (dimension[0].equals("linhas"))
-        rows = Integer.parseInt(dimension[1]);
-      else if (dimension[0].equals("colunas"))
-        columns = Integer.parseInt(dimension[1]);
-      else
-        throw new UnrecognizedEntryException("Dimensões inválidas para a folha");
+      for (int i = 0; i < 2; i++) {
+        String line = bufferedReader.readLine();
+        String[] dimension = line.split("=");
+        if (dimension[0].equals("linhas"))
+          rows = Integer.parseInt(dimension[1]);
+        else if (dimension[0].equals("colunas"))
+          columns = Integer.parseInt(dimension[1]);
+        else
+          throw new UnrecognizedEntryException("Dimensões inválidas para a folha");
+      }
+    } catch (IOException e) {
+      throw e;
     }
 
     if (rows <= 0 || columns <= 0)
@@ -69,13 +76,19 @@ class Parser {
   }
 
   // parse the begining of an expression
-  Content parseContent(String contentSpecification) {
+  Content parseContent(String contentSpecification) throws UnrecognizedEntryException {
     char c = contentSpecification.charAt(0);
 
-    if (c == '=')
-      parseContentExpression(contentSpecification.substring(1));
-    else
-      parseLiteral(contentSpecification);
+     try {
+        if (c == '=') {
+            return parseContentExpression(contentSpecification.substring(1));
+        } else {
+            return parseLiteral(contentSpecification);
+        }
+    } catch (Exception e) {
+        // Handle or rethrow the exception as needed.
+        throw new UnrecognizedEntryException("Error parsing content specification", e);
+    }
   }
 
   private Literal parseLiteral(String literalExpression) throws UnrecognizedEntryException {
@@ -131,16 +144,15 @@ class Parser {
       return parseLiteral(argExpression);
   }
 
-  private Content parseIntervalFunction(String functionName, String rangeDescription)
-    throws UnrecognizedEntryException /* , more exceptions ? */ {
+  private Content parseIntervalFunction(String functionName, String rangeDescription) throws UnrecognizedEntryException /* , more exceptions ? */ {
     Range range = _spreadsheet.createRange(rangeDescription);
     return switch (functionName) {
-      case "CONCAT" -> new Concat com range;
-      case "COALESCE" -> new Coalesce com range;
-      case "PRODUCT" -> new Product com range;
-      case "AVERAGE" -> new Average com range;
+      case "CONCAT" -> new Concat(range);
+      case "COALESCE" -> new Coalesce(range);
+      case "PRODUCT" -> new Product(range);
+      case "AVERAGE" -> new Average(range);
       default -> throw new UnrecognizedEntryException("Função Inválida: " + functionName);
-    }
+    };
   }
 
   /* Na classe Spreadsheet preciso de algo com a seguinte funcionalidade

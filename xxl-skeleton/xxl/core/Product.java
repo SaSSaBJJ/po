@@ -1,22 +1,18 @@
 package xxl.core;
 
-public class Average extends IntervalFunction {
-
+public class Product  extends IntervalFunction {
     private Range _range;
 
-    public Average(Range range) {
+    public Product(Range range) {
 
-        super("AVERAGE");
+        super("PRODUCT");
 
         _range = range;
     }
 
     @Override
     public Literal compute() {
-        if (_range.getFirstRow()==_range.getLastRow()){
-            //FIX ME
-            return null;
-        }
+        //FIX ME
         return null;
     }
         
