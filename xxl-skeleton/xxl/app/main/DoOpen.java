@@ -15,6 +15,7 @@ class DoOpen extends Command<Calculator> {
 
   DoOpen(Calculator receiver) {
     super(Label.OPEN, receiver);
+    addStringField("file", Message.openFile());
   }
   
   @Override
@@ -22,7 +23,7 @@ class DoOpen extends Command<Calculator> {
     String filename = stringField("file");
     try {
       _receiver.load(filename);
-    } catch (UnavailableFileException | FileOpenFailedException e) {
+    } catch (UnavailableFileException | ClassNotFoundException e) {
       throw new FileOpenFailedException(e);
     }
   }
