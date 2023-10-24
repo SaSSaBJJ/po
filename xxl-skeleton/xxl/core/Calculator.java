@@ -163,7 +163,7 @@ public class Calculator {
 			throw new UnavailableFileException(filename);
 		}
   }
-  
+
   /**
    * Read text input file and create domain entities.
    *
@@ -171,11 +171,13 @@ public class Calculator {
    * @throws ImportFileException
    */
   public void importFile(String filename) throws ImportFileException {
-
     try {
-      _spreadsheet.importFile(filename);
-    } catch (IOException | UnrecognizedEntryException e) {
-      throw new ImportFileException(filename, e);
+      _spreadsheet = new Parser().parseImport(filename);
+      System.out.println(_spreadsheet);
+    }catch (IOException e){
+      System.out.println("Error reading file");
+    } catch(UnrecognizedEntryException e){
+      System.out.println("Error reading line");
     }
   }
 

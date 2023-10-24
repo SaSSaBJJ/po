@@ -109,19 +109,13 @@ public class Spreadsheet implements Serializable {
       throw new UnrecognizedEntryException("Célula não existe");
     }
     
-    /*for (Cell c: _cells) {
-      if (c.getRow()==row & c.getColumn()==column){
-        
-    }*/
-  }
-
-  void importFile(String txtfile) throws IOException, UnrecognizedEntryException {
-		try {
-			new Parser(this).parseFile(txtfile);
-		}
-    catch (IOException | UnrecognizedEntryException e) {
-			throw e;
-		}
+    for (List<Cell> c: _cells) {
+      for(Cell c1: c){
+        if (c1.getRow()==row & c1.getColumn()==column) {
+          c1.setContent(new Co);
+        }
+      }
+    }
   }
 
   public Range createRange(String range) throws UnrecognizedEntryException {
@@ -145,7 +139,7 @@ public class Spreadsheet implements Serializable {
     }
     // check if coordinates are valid
     // if yes
-    return new Range(firstRow, firstColumn, lastRow, lastColumn); //and spreadsheet;
+    return new Range(firstRow, firstColumn, lastRow, lastColumn, this); //and spreadsheet;
   }
 
   

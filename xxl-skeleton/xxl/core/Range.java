@@ -11,8 +11,8 @@ public class Range {
 
     private Spreadsheet _spreadsheet;
 
-    public Range(int br, int bc, int er, int ec) {
-
+    public Range(int br, int bc, int er, int ec, Spreadsheet spreadsheet) {
+        _spreadsheet = spreadsheet;
         _firstRow = br;
         _firstColumn = bc;
         _lastRow = er;

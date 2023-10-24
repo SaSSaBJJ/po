@@ -22,8 +22,9 @@ class DoShow extends Command<Spreadsheet> {
   
   @Override
   protected final void execute() throws CommandException {
-
+    System.out.println(_receiver.getRows());
     try {
+
       _display.popup(_receiver.getCellsInRange(_receiver.createRange(stringField("range"))));
       
     } 

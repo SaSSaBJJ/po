@@ -33,6 +33,32 @@ class Parser {
 
     return _spreadsheet;
   }
+
+  Spreadsheet parseImport(String filename) throws IOException, UnrecognizedEntryException /* More Exceptions? */ {
+    int rows = -1;
+    int columns = -1;
+    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+
+      for (int i = 0; i < 2; i++) {
+        String line = reader.readLine();
+        String[] dimension = line.split("=");
+        if (dimension[0].equals("linhas"))
+          rows = Integer.parseInt(dimension[1]);
+        else if (dimension[0].equals("colunas"))
+          columns = Integer.parseInt(dimension[1]);
+        else
+          throw new UnrecognizedEntryException("Dimensões inválidas para a folha");
+      }
+      Spreadsheet spreadsheet = new Spreadsheet(rows, columns);
+      String line;
+
+      while ((line = reader.readLine()) != null){
+        parseLine(line, spreadsheet);
+      }
+      return spreadsheet;
+    }
+
+  }
   
   private void parseDimensions(Reader reader) throws UnrecognizedEntryException, IOException {
     int rows = -1;
@@ -70,6 +96,20 @@ class Parser {
       String[] address = components[0].split(";");
       Content content = parseContent(components[1]);
       _spreadsheet.insertContent(Integer.parseInt(address[0]), Integer.parseInt(address[1]), content.asString());
+    } else
+      throw new UnrecognizedEntryException("Wrong format in line: " + line);
+  }
+
+  private void parseLine(String line, Spreadsheet spreadsheet) throws UnrecognizedEntryException /*, more exceptions? */{
+    String[] components = line.split("\\|");
+
+    if (components.length == 1) // do nothing
+      return;
+
+    if (components.length == 2) {
+      String[] address = components[0].split(";");
+      Content content = parseContent(components[1]);
+      spreadsheet.insertContent(Integer.parseInt(address[0]), Integer.parseInt(address[1]), content.asString());
     } else
       throw new UnrecognizedEntryException("Wrong format in line: " + line);
   }
