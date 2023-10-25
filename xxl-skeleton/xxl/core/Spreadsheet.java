@@ -34,10 +34,11 @@ public class Spreadsheet implements Serializable {
 
     _cells=new ArrayList<>();
 
-    for (int row = 0; row < _rows; row++) {
+    for (int row = 1; row <= _rows; row++) {
       List<Cell> rowCells = new ArrayList<>();
-      for (int col = 0; col < _columns; col++) {
-          rowCells.add(new Cell(row, col, null));
+      for (int col = 1; col <= _columns; col++) {
+//        System.out.println("SPREADSHEET: adding cell on row: " + row + " col: " + col);
+          rowCells.add(new Cell(row, col, new LiteralString("")));
       }
       _cells.add(rowCells);
     }
@@ -84,6 +85,7 @@ public class Spreadsheet implements Serializable {
   public List<Cell> getCells() {
     List<Cell> allCells = new ArrayList<>();
 
+//    System.out.println("SPREADSHEET: getting cells" + _cells);
     for (List<Cell> rowCells : _cells) {
         allCells.addAll(rowCells);
     }
@@ -92,6 +94,7 @@ public class Spreadsheet implements Serializable {
 }
 
   public List<Cell> getCellsInRange(Range range) {
+//    System.out.println("SPEADSHEET: getting cels in range " + range);
     return range.getCells();
   }
 
@@ -100,22 +103,30 @@ public class Spreadsheet implements Serializable {
    * Insert specified content in specified address.
    *
    * @param row the row of the cell to change 
-   * param column the column of the cell to change
+   * @param column the column of the cell to change
    * @param contentSpecification the specification in a string format of the content to put
    *        in the specified cell.
    */
-  public void insertContent(int row, int column, String contentSpecification) throws UnrecognizedEntryException /* FIXME maybe add exceptions */ {
+  public void insertContent(int row, int column, Content contentSpecification) throws UnrecognizedEntryException /* FIXME maybe add exceptions */ {
     if (row > _rows | column > _columns | row <= 0 | column <= 0) {
       throw new UnrecognizedEntryException("Célula não existe");
     }
-    
+
+//    System.out.println("SPREADSHEET: SETTING CONTENT " + contentSpecification);
     for (List<Cell> c: _cells) {
       for(Cell c1: c){
         if (c1.getRow()==row & c1.getColumn()==column) {
-//          c1.setContent(new );
+          c1.setContent(contentSpecification);
         }
       }
     }
+//    for (List<Cell> c: _cells) {
+//      for(Cell c1: c){
+//        if (c1.getRow()==row & c1.getColumn()==column) {
+//          System.out.println("SPREADSHEET: CELL " + c1.getRow() + " " + c1.getColumn() + " " + c1.getContent());
+//        }
+//      }
+//    }
   }
 
   public Range createRange(String range) throws UnrecognizedEntryException {
@@ -134,11 +145,13 @@ public class Spreadsheet implements Serializable {
       firstColumn = lastColumn = Integer.parseInt(rangeCoordinates[1]);
     }
 
-    if (firstRow <=0 | firstColumn <= 0 | lastRow < firstRow | lastColumn < firstColumn) {
-      throw new UnrecognizedEntryException("Range Inválido"); 
-    }
     // check if coordinates are valid
+    if ((firstRow <1 || firstRow > _rows) | (firstColumn < 1 || firstColumn > _columns) | (lastRow < 1 || lastRow > _rows) |
+            (lastColumn < 1 || lastColumn > _columns) | lastRow < firstRow | lastColumn < firstColumn) {
+      throw new UnrecognizedEntryException("Range Inválido");
+    }
     // if yes
+//    System.out.println("RANGE IS BEGIN CREATED");
     return new Range(firstRow, firstColumn, lastRow, lastColumn, this); //and spreadsheet;
   }
 

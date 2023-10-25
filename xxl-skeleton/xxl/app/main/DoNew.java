@@ -20,7 +20,7 @@ class DoNew extends Command<Calculator> {
   @Override
   protected final void execute() throws CommandException {
   
-    String filename = Form.requestString(Message.newSaveAs());
+    String filename = Form.requestString(Message.saveBeforeExit());
     int rows = Form.requestInteger(Message.lines());
     int columns = Form.requestInteger(Message.columns());
     

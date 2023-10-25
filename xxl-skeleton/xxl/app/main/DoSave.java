@@ -20,12 +20,12 @@ class DoSave extends Command<Calculator> {
   @Override
   protected final void execute() {
     // FIXME implement command and create a local For
-    String filename = _receiver.getFilename();
+	  String filename = Form.requestString(Message.newSaveAs());
 
-		try {
+	  try {
 			_receiver.saveAs(filename);
 		} catch (MissingFileAssociationException | IOException e1) {
-			filename = Form.requestString(Message.newSaveAs());
+		  filename = Form.requestString(Message.newSaveAs());
 			_receiver.setFilename(filename);
 			try {
 				_receiver.saveAs(filename);

@@ -20,11 +20,8 @@ public class Mul extends BinaryFunction {
         int result = _operand1.asInt() * _operand2.asInt();
         return new LiteralInteger(result);
     }
-
     @Override
-    public String toString() {
-        return compute().toString();
-    }
+    public String toString() { return "MUL(" + _arg1 + "," + _arg2 + ")";}
 
     @Override
     Literal value() {

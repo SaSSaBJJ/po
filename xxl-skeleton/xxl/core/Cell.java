@@ -2,7 +2,9 @@ package xxl.core;
 
 //import javax.swing.text.AbstractDocument.Content;
 
-public class Cell {
+import java.io.Serializable;
+
+public class Cell implements Serializable {
 
     private int _row;
 
@@ -20,10 +22,14 @@ public class Cell {
 
     // toString method to represent the cell as a string
     public String toString() {
-        return  _row + ";" + _column + "|" +  _content.toString();
+        if (_content.value().asString().isEmpty()){
+            return  _row + ";" + _column + "|" +  _content.value() + (_content.value().asString().equals( _content.toString()) ? "" : "#VALUE=" + _content.toString());
+        }
+        return  _row + ";" + _column + "|" +  _content.value() + (_content.value().asString().equals( _content.toString()) ? "" : "=" + _content.toString());
     }
 
     protected void setContent(Content c) {
+//        System.out.println("CELL: SETTING CONTENT " + c);
         _content = c;
     }
 

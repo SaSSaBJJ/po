@@ -17,6 +17,7 @@ public class Range {
         _firstColumn = bc;
         _lastRow = er;
         _lastColumn = ec;
+//        System.out.println("RANGE IS CREATED: "+spreadsheet+", br: " + br + ", bc: " + bc + ", er:" + er + ", ec: " + ec);
     }
 
     public int getFirstRow(){
@@ -37,7 +38,9 @@ public class Range {
     
     List<Cell> getCells() {
         List <Cell>_cellsInRange = new ArrayList<Cell>();
-        for (Cell c: _spreadsheet.getCells()) { 
+//        System.out.println("RANGE: getting cells in range" + this);
+        for (Cell c: _spreadsheet.getCells()) {
+//            System.out.println("RANGE: getting cell" + c);
             if (c.getRow() >= _firstRow & c.getRow() <= _lastRow & c.getColumn() >= _firstColumn & c.getColumn() <= _lastColumn) {
                 _cellsInRange.add(c);
             }

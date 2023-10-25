@@ -13,25 +13,10 @@ import xxl.core.exception.UnrecognizedEntryException;
 class Parser {
 
   private Spreadsheet _spreadsheet;
-  
-  Parser() {
-  }
+
 
   Parser(Spreadsheet spreadsheet) {
     _spreadsheet = spreadsheet;
-  }
-
-  Spreadsheet parseFile(String filename) throws IOException, UnrecognizedEntryException /* More Exceptions? */ {
-    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-      parseDimensions(reader);
-
-      String line;
-
-      while ((line = reader.readLine()) != null)
-        parseLine(line);
-    }
-
-    return _spreadsheet;
   }
 
   Spreadsheet parseImport(String filename) throws IOException, UnrecognizedEntryException /* More Exceptions? */ {
@@ -50,6 +35,7 @@ class Parser {
           throw new UnrecognizedEntryException("Dimensões inválidas para a folha");
       }
       Spreadsheet spreadsheet = new Spreadsheet(rows, columns);
+      _spreadsheet = spreadsheet;
       String line;
 
       while ((line = reader.readLine()) != null){
@@ -58,46 +44,6 @@ class Parser {
       return spreadsheet;
     }
 
-  }
-  
-  private void parseDimensions(Reader reader) throws UnrecognizedEntryException, IOException {
-    int rows = -1;
-    int columns = -1;
-
-    try(BufferedReader bufferedReader = new BufferedReader(reader)) {
-    
-      for (int i = 0; i < 2; i++) {
-        String line = bufferedReader.readLine();
-        String[] dimension = line.split("=");
-        if (dimension[0].equals("linhas"))
-          rows = Integer.parseInt(dimension[1]);
-        else if (dimension[0].equals("colunas"))
-          columns = Integer.parseInt(dimension[1]);
-        else
-          throw new UnrecognizedEntryException("Dimensões inválidas para a folha");
-      }
-    } catch (IOException e) {
-      throw e;
-    }
-
-    if (rows <= 0 || columns <= 0)
-      throw new UnrecognizedEntryException("Dimensões inválidas para a folha");
-
-    _spreadsheet = new Spreadsheet(rows, columns);
-  }
-
-  private void parseLine(String line) throws UnrecognizedEntryException /*, more exceptions? */{
-    String[] components = line.split("\\|");
-
-    if (components.length == 1) // do nothing
-      return;
-    
-    if (components.length == 2) {
-      String[] address = components[0].split(";");
-      Content content = parseContent(components[1]);
-      _spreadsheet.insertContent(Integer.parseInt(address[0]), Integer.parseInt(address[1]), content.asString());
-    } else
-      throw new UnrecognizedEntryException("Wrong format in line: " + line);
   }
 
   private void parseLine(String line, Spreadsheet spreadsheet) throws UnrecognizedEntryException /*, more exceptions? */{
@@ -109,7 +55,7 @@ class Parser {
     if (components.length == 2) {
       String[] address = components[0].split(";");
       Content content = parseContent(components[1]);
-      spreadsheet.insertContent(Integer.parseInt(address[0]), Integer.parseInt(address[1]), content.asString());
+      spreadsheet.insertContent(Integer.parseInt(address[0]), Integer.parseInt(address[1]), content);
     } else
       throw new UnrecognizedEntryException("Wrong format in line: " + line);
   }
@@ -117,7 +63,7 @@ class Parser {
   // parse the begining of an expression
   Content parseContent(String contentSpecification) throws UnrecognizedEntryException {
     char c = contentSpecification.charAt(0);
-
+//    System.out.println("PARSER: parsing content: " + contentSpecification);
      try {
         if (c == '=') {
             return parseContentExpression(contentSpecification.substring(1));
@@ -149,7 +95,8 @@ class Parser {
       return parseFunction(contentSpecification);
     // It is a reference
     String[] address = contentSpecification.split(";");
-    return new Reference(Integer.parseInt(address[0].trim()), Integer.parseInt(address[1]));
+//    System.out.println("PARSER: parseContentExpression " + _spreadsheet);
+    return new Reference(Integer.parseInt(address[0].trim()), Integer.parseInt(address[1]), _spreadsheet);
   }
 
   private Content parseFunction(String functionSpecification) throws UnrecognizedEntryException /*more exceptions */ {
@@ -177,7 +124,8 @@ class Parser {
   private Content parseArgumentExpression(String argExpression) throws UnrecognizedEntryException {
     if (argExpression.contains(";")  && argExpression.charAt(0) != '\'') {
       String[] address = argExpression.split(";");
-      return new Reference(Integer.parseInt(address[0].trim()), Integer.parseInt(address[1]));
+//      System.out.println("PARSER: parseArgumentExpression" + _spreadsheet);
+      return new Reference(Integer.parseInt(address[0].trim()), Integer.parseInt(address[1]), _spreadsheet);
       // pode ser diferente do anterior em parseContentExpression
     } else
       return parseLiteral(argExpression);

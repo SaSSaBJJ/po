@@ -124,13 +124,15 @@ public class Calculator {
    */
   public void save() throws FileNotFoundException, MissingFileAssociationException, IOException {
     if (_filename == null) {
-			throw new MissingFileAssociationException();
-		}
+      throw new MissingFileAssociationException();
+    }
 
-		try (ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(_filename))) {
-			objOut.writeObject(_filename);
-			objOut.writeObject(_spreadsheet);
-		}
+      try (ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(_filename))) {
+          objOut.writeObject(_filename);
+          objOut.writeObject(_spreadsheet);
+      }catch (Exception e){
+        System.out.println(e);
+      }
   }
   
   /**
@@ -144,6 +146,7 @@ public class Calculator {
    */
   public void saveAs(String filename) throws FileNotFoundException, MissingFileAssociationException, IOException {
     _filename = filename;
+//    System.out.println("CALULATOR: SAVING FILE: " + filename);
     save();
   }
   
@@ -172,12 +175,12 @@ public class Calculator {
    */
   public void importFile(String filename) throws ImportFileException {
     try {
-      _spreadsheet = new Parser().parseImport(filename);
-      System.out.println(_spreadsheet);
+      _spreadsheet = new Parser(_spreadsheet).parseImport(filename);
+//      System.out.println(_spreadsheet);
     }catch (IOException e){
-      System.out.println("Error reading file");
+      System.out.println("Error reading file" + e);
     } catch(UnrecognizedEntryException e){
-      System.out.println("Error reading line");
+      System.out.println("Error reading line"+ e);
     }
   }
 
@@ -199,7 +202,7 @@ public class Calculator {
     
   }
 
-  /**
+/**
    * 
    * @param range as a string
    * @returns range as Range
@@ -209,14 +212,15 @@ public class Calculator {
     return _spreadsheet.createRange(range);
   }
 
-  /**
-   * 
-   * @param row row of the cell
-   * @param column column of the cell
-   * @param contentSpecification content to insert in the cell
-   * @throws UnrecognizedEntryException
-   */
-  public void insertContent(int row, int column, String contentSpecification) throws UnrecognizedEntryException /* FIXME maybe add exceptions */ {
-    _spreadsheet.insertContent(row, column, contentSpecification);
-  }
+//  /**
+//   *
+//   * @param row row of the cell
+//   * @param column column of the cell
+//   * @param contentSpecification content to insert in the cell
+//   * @throws UnrecognizedEntryException
+//   */
+//  public void insertContent(int row, int column, String contentSpecification) throws UnrecognizedEntryException /* FIXME maybe add exceptions */ {
+//
+//    _spreadsheet.insertContent(row, column, contentSpecification);
+//  }
 }

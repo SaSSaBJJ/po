@@ -1,27 +1,19 @@
 *** testsBoth/A-015-015-M-ok.out	2023-10-18 21:14:21.601009995 +0100
---- testsBoth/A-015-015-M-ok.outhyp	2023-10-20 00:45:49.048440660 +0100
+--- testsBoth/A-015-015-M-ok.outhyp	2023-10-25 18:13:27.122175667 +0100
 ***************
-*** 17,38 ****
+*** 17,23 ****
   0 - Sair
   Escolha uma opção: 1
   Especifique a gama (startline;startcol:endline;endcol): 3;3
-- 3;3|#VALUE=4;2
-- Menu de Edição
-- 1 - Visualizar
-- 2 - Inserir
-- 3 - Copiar
-- 4 - Apagar
-- 5 - Cortar
-- 6 - Colar
-- 7 - Mostrar 'cut buffer'
-- 0 - Sair
-- Escolha uma opção: 0
-- Menu Principal
-- 1 - Novo
-- 2 - Abrir
-- 3 - Guardar
-- 4 - Menu de Edição
-- 5 - Menu de Consultas
-- 0 - Sair
-- Escolha uma opção: 0
---- 17,19 ----
+! 3;3|#VALUE=4;2
+  Menu de Edição
+  1 - Visualizar
+  2 - Inserir
+--- 17,23 ----
+  0 - Sair
+  Escolha uma opção: 1
+  Especifique a gama (startline;startcol:endline;endcol): 3;3
+! 3;3|4;2
+  Menu de Edição
+  1 - Visualizar
+  2 - Inserir

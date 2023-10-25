@@ -1,5 +1,6 @@
 package xxl.core;
 
+import javax.swing.text.html.HTMLDocument;
 import java.util.*;
 
 public class Reference extends Content{
@@ -8,14 +9,15 @@ public class Reference extends Content{
 
     private Spreadsheet _spreadsheet;
 
-    public Reference(int row, int column){
+    public Reference(int row, int column, Spreadsheet spreadsheet){
         _row = row;
         _column = column;
+        _spreadsheet = spreadsheet;
     }
     
     @Override
     public String toString() {
-        return  _row + ";" + _column;
+            return _row + ";" + _column;
     }
 
     Literal value() {
