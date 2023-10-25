@@ -2,7 +2,8 @@
 
 let total=0;
 let correct=0;
-
+#find xxl -name "*.java" | xargs javac -cp po-uilib.jar:.
+#java -cp :po-uilib.jar:. -Dimport=testsBoth/A-002-002-M-ok.import -Din=testsBoth/A-002-002-M-ok.in -Dout=testsBoth/A-002-002-M-ok.outhyp xxl.app.App
 for x in testsBoth/*.in; do
     if [ -e ${x%.in}.import ]; then
         java -cp :po-uilib.jar:. -Dimport=${x%.in}.import -Din=$x -DwriteInput=true -Dout=${x%.in}.outhyp xxl.app.App;
