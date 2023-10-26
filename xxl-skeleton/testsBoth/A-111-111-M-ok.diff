@@ -1,0 +1,31 @@
+*** testsBoth/A-111-111-M-ok.out	2023-10-19 17:31:47.000000000 +0100
+--- testsBoth/A-111-111-M-ok.outhyp	2023-10-26 01:21:23.520775746 +0100
+***************
+*** 17,42 ****
+  0 - Sair
+  Escolha uma opção: 1
+  Especifique a gama (startline;startcol:endline;endcol): 2;1:2;3
+- 2;1|25
+- 2;2|43
+- 2;3|'123456abcdef=CONCAT(1;1:1;4)
+- Menu de Edição
+- 1 - Visualizar
+- 2 - Inserir
+- 3 - Copiar
+- 4 - Apagar
+- 5 - Cortar
+- 6 - Colar
+- 7 - Mostrar 'cut buffer'
+- 0 - Sair
+- Escolha uma opção: 0
+- Menu Principal
+- 1 - Novo
+- 2 - Abrir
+- 3 - Guardar
+- 4 - Menu de Edição
+- 5 - Menu de Consultas
+- 0 - Sair
+- Escolha uma opção: 
+- Número inválido!
+- Escolha uma opção: 0
+--- 17,19 ----

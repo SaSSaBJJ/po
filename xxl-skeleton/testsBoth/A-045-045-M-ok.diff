@@ -1,0 +1,53 @@
+*** testsBoth/A-045-045-M-ok.out	2023-10-19 17:31:45.000000000 +0100
+--- testsBoth/A-045-045-M-ok.outhyp	2023-10-26 01:21:18.648780553 +0100
+***************
+*** 16,23 ****
+  7 - Mostrar 'cut buffer'
+  0 - Sair
+  Escolha uma opção: 2
+! Especifique a gama (startline;startcol:endline;endcol): 1;3:3;3
+! Insira o conteúdo da célula: 9
+  Menu de Edição
+  1 - Visualizar
+  2 - Inserir
+--- 16,34 ----
+  7 - Mostrar 'cut buffer'
+  0 - Sair
+  Escolha uma opção: 2
+! Menu de Edição
+! 1 - Visualizar
+! 2 - Inserir
+! 3 - Copiar
+! 4 - Apagar
+! 5 - Cortar
+! 6 - Colar
+! 7 - Mostrar 'cut buffer'
+! 0 - Sair
+! Escolha uma opção: 1;3:3;3
+! Número inválido!
+! Escolha uma opção: 9
+! Opção inválida!
+  Menu de Edição
+  1 - Visualizar
+  2 - Inserir
+***************
+*** 29,37 ****
+  0 - Sair
+  Escolha uma opção: 1
+  Especifique a gama (startline;startcol:endline;endcol): 1;3:3;3
+! 1;3|9
+! 2;3|9
+! 3;3|9
+  Menu de Edição
+  1 - Visualizar
+  2 - Inserir
+--- 40,48 ----
+  0 - Sair
+  Escolha uma opção: 1
+  Especifique a gama (startline;startcol:endline;endcol): 1;3:3;3
+! 1;3|
+! 2;3|
+! 3;3|
+  Menu de Edição
+  1 - Visualizar
+  2 - Inserir

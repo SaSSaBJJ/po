@@ -1,0 +1,34 @@
+*** testsBoth/A-122-122-M-ok.out	2023-10-19 17:31:48.000000000 +0100
+--- testsBoth/A-122-122-M-ok.outhyp	2023-10-26 01:21:24.296775010 +0100
+***************
+*** 12,36 ****
+  0 - Sair
+  Escolha uma opção: 1
+  Valor a procurar: '123
+! 1;1|'123
+! 2;4|'123=COALESCE(1;1:1;2)
+! Menu de Consultas
+! 1 - Procurar valores
+! 2 - Procurar funções
+! 0 - Sair
+! Escolha uma opção: 1
+! Valor a procurar: '123456
+! 2;3|'123456=CONCAT(1;1:1;2)
+! Menu de Consultas
+! 1 - Procurar valores
+! 2 - Procurar funções
+! 0 - Sair
+! Escolha uma opção: 0
+! Menu Principal
+! 1 - Novo
+! 2 - Abrir
+! 3 - Guardar
+! 4 - Menu de Edição
+! 5 - Menu de Consultas
+! 0 - Sair
+! Escolha uma opção: 0
+--- 12,15 ----
+  0 - Sair
+  Escolha uma opção: 1
+  Valor a procurar: '123
+! Valor a procurar: 1
