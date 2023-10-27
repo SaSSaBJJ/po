@@ -19,14 +19,24 @@ class DoNew extends Command<Calculator> {
   
   @Override
   protected final void execute() throws CommandException {
-  
-    String filename = Form.requestString(Message.saveBeforeExit());
+    boolean save = false;
+    String filename = "";
+//    System.out.println("SPREAD::::" +  _receiver.getSpreadsheet());
+    if(_receiver.getFilename().isEmpty() && _receiver.getSpreadsheet() != null){
+      save = Form.requestString(Message.saveBeforeExit()).equals("s");
+    }
+    if(save){
+      filename = Form.requestString(Message.newSaveAs());
+    }
+
     int rows = Form.requestInteger(Message.lines());
     int columns = Form.requestInteger(Message.columns());
     
     try {
+      if(_receiver.getFilename().isEmpty() && save){
+        _receiver.saveAs(filename);
+      }
       _receiver.createNewSpreadsheet(rows, columns);
-      _receiver.saveAs(filename);
     } catch (IOException | MissingFileAssociationException e) {
       return;
     }

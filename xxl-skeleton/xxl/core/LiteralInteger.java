@@ -20,7 +20,7 @@ public class LiteralInteger extends Literal{
         return _value;
     }
 
-    Literal value() {
+    public Literal value() {
         return this;
     }
     

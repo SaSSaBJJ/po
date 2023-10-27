@@ -24,7 +24,7 @@ public class Mul extends BinaryFunction {
     public String toString() { return "MUL(" + _arg1 + "," + _arg2 + ")";}
 
     @Override
-    Literal value() {
+    public Literal value() {
         return compute();
     }
 }

@@ -26,6 +26,8 @@ public class Spreadsheet implements Serializable {
 
   private List<List<Cell>> _cells;
 
+  private List<Cell> _cutBuffer;
+
   public Spreadsheet(int rows, int columns) {
 
     _rows=rows;
@@ -56,18 +58,28 @@ public class Spreadsheet implements Serializable {
     return _changed;
   }
 
-  /* FIX ME
   public List<Cell> getCutBuffer(){
-    
-  }
-  */
-
-  public void copy(String range){
-    //FIX ME
+    return _cutBuffer;
   }
 
-  public void clear(String range){
-    //FIX ME
+  public void copy(Range range){
+    ArrayList<Cell> cutBuffer = new ArrayList<>();
+    int row = 1 - range.getFirstRow();
+    int col = 1 - range.getFirstColumn();
+    for  (Cell c : range.getCells()){
+      cutBuffer.add(new Cell(c.getRow() + row, c.getColumn() + col, c.getContent()));
+    }
+    _cutBuffer = cutBuffer;
+  }
+
+  public void clear(Range range) throws UnrecognizedEntryException {
+    try {
+      for (Cell c : range.getCells()){
+        c.setContent(new LiteralString(""));
+      }
+    }catch (Exception e) {
+      throw e;
+    }
   }
 
   public void addUser(User user){
@@ -107,12 +119,34 @@ public class Spreadsheet implements Serializable {
    * @param contentSpecification the specification in a string format of the content to put
    *        in the specified cell.
    */
+  public void insertContent(int row, int column, String contentSpecification) throws UnrecognizedEntryException /* FIXME maybe add exceptions */ {
+    if (row > _rows | column > _columns | row <= 0 | column <= 0) {
+      throw new UnrecognizedEntryException("Célula não existe");
+    }
+
+//    System.out.println("SPREADSHEET: SETTING CONTENT " + row + ";" + column + "|" + contentSpecification);
+    for (List<Cell> c: _cells) {
+      for(Cell c1: c){
+        if (c1.getRow()==row & c1.getColumn()==column) {
+          c1.setContent(new Parser(this).parseContent(contentSpecification));
+        }
+      }
+    }
+//    for (List<Cell> c: _cells) {
+//      for(Cell c1: c){
+//        if (c1.getRow()==row & c1.getColumn()==column) {
+//          System.out.println("SPREADSHEET: CELL " + c1.getRow() + " " + c1.getColumn() + " " + c1.getContent());
+//        }
+//      }
+//    }
+  }
+
   public void insertContent(int row, int column, Content contentSpecification) throws UnrecognizedEntryException /* FIXME maybe add exceptions */ {
     if (row > _rows | column > _columns | row <= 0 | column <= 0) {
       throw new UnrecognizedEntryException("Célula não existe");
     }
 
-//    System.out.println("SPREADSHEET: SETTING CONTENT " + contentSpecification);
+//    System.out.println("SPREADSHEET: SETTING CONTENT " + row + ";" + column + "|" + contentSpecification);
     for (List<Cell> c: _cells) {
       for(Cell c1: c){
         if (c1.getRow()==row & c1.getColumn()==column) {
@@ -144,7 +178,7 @@ public class Spreadsheet implements Serializable {
       firstRow = lastRow = Integer.parseInt(rangeCoordinates[0]);
       firstColumn = lastColumn = Integer.parseInt(rangeCoordinates[1]);
     }
-
+//    System.out.println("SPREADSHEET: range is "+ range);
     // check if coordinates are valid
     if ((firstRow <1 || firstRow > _rows) | (firstColumn < 1 || firstColumn > _columns) | (lastRow < 1 || lastRow > _rows) |
             (lastColumn < 1 || lastColumn > _columns) | lastRow < firstRow | lastColumn < firstColumn) {

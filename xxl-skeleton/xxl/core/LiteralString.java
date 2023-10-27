@@ -25,7 +25,7 @@ public class LiteralString extends Literal{
         }
     }
 
-    Literal value() {
+    public Literal value() {
         return this;
     }
 }

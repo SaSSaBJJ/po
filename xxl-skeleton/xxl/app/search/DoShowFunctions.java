@@ -14,15 +14,18 @@ class DoShowFunctions extends Command<Spreadsheet> {
   DoShowFunctions(Spreadsheet receiver) {
     super(Label.SEARCH_FUNCTIONS, receiver);
     // FIXME add fields
+    addStringField("function", Message.searchFunction());
   }
 
   @Override
   protected final void execute() {
-    int value = Form.requestInteger(Message.searchFunction());
+    String value = stringField("function");
     try {
       for (Cell c: _receiver.getCells()) {
-        if (c.getContent().asInt() == value){
-          _display.popup(c);
+        if(value.length() < c.getContent().asString().length()){
+          if (c.getContent().asString().substring(0, value.length()).equals(value)){
+            _display.popup(c);
+          }
         }
       }
     }catch (Exception e){

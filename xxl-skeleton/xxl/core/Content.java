@@ -7,7 +7,7 @@ public abstract class Content implements Serializable {
     public abstract String toString();
 
     // Abstract method to get the value of the content as a Literal
-    abstract Literal value();
+    public abstract Literal value();
 
     // Method to return the content as a string
     public String asString() {

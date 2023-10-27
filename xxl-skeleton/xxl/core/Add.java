@@ -24,11 +24,11 @@ public class Add extends BinaryFunction {
 
     @Override
     public String toString() {
-        return compute().toString();
+        return "ADD(" + _arg1 + "," + _arg2 + ")";
     }
 
     @Override
-    Literal value() {
+    public Literal value() {
         return compute();
     }
 }

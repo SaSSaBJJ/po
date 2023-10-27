@@ -16,14 +16,15 @@ class DoShowValues extends Command<Spreadsheet> {
   DoShowValues(Spreadsheet receiver) {
     super(Label.SEARCH_VALUES, receiver);
     // FIXME add fields
+    addStringField("value", Message.searchValue());
   }
   
   @Override
   protected final void execute() {
-    int value = Form.requestInteger(Message.searchValue());
+    String value = stringField("value");
     try {
       for (Cell c: _receiver.getCells()) {
-        if (c.getContent().asInt() == value){
+        if (c.getContent().value().asString().equals(value)){
           _display.popup(c);
         }
       }

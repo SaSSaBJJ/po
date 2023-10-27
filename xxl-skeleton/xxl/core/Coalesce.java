@@ -12,18 +12,24 @@ public class Coalesce extends IntervalFunction {
 
     @Override
     public Literal compute() {
-        //FIX ME
-        return null;
+        for (Cell c : _range.getCells()){
+            if (!c.getContent().value().asString().isEmpty()){
+                if(c.getContent().value().asString().charAt(0) == '\''){
+                    return c.getContent().value();
+                }
+            }
+        }
+        return new LiteralString("");
     }
         
 
     @Override
     public String toString() {
-        return compute().toString();
+        return "COALESCE(" + _range.getFirstRow() + ";" + _range.getFirstColumn() + ":" + _range.getLastRow() + ";" + _range.getLastColumn() + ")";
     }
 
     @Override
-    Literal value() {
+    public Literal value() {
         return compute();
     }
 }

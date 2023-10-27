@@ -46,7 +46,7 @@ public class Cell implements Serializable {
     }
 
     // Get the value of the cell (assuming it holds a Literal)
-    Literal value() {
+    public Literal value() {
         if (_content instanceof Literal) {
             return (Literal) _content;
         } else {

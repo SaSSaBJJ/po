@@ -12,18 +12,25 @@ public class Product  extends IntervalFunction {
 
     @Override
     public Literal compute() {
-        //FIX ME
-        return null;
+        //
+        int i = 1;
+        for (Cell c: _range.getCells()) {
+            if(c.getContent().asString().isEmpty() || c.getContent().asString().charAt(0) == '\''){
+                return new LiteralString("");
+            }
+            i *= c.getContent().asInt();
+        }
+        return new LiteralInteger(i);
     }
         
 
     @Override
     public String toString() {
-        return compute().toString();
+        return "PRODUCT(" + _range.getFirstRow() + ";" + _range.getFirstColumn() + ":" + _range.getLastRow() + ";" + _range.getLastColumn() + ")";
     }
 
     @Override
-    Literal value() {
+    public Literal value() {
         return compute();
     }
 }

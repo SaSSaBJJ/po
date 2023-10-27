@@ -13,18 +13,22 @@ public class Concat extends IntervalFunction {
 
     @Override
     public Literal compute() {
-        //FIX ME
-        return null;
+        StringBuilder result = new StringBuilder();
+        result.append('\'');
+        for (Cell c: _range.getCells()){
+            result.append(c.getContent().asString().substring(1));
+        }
+        return new LiteralString(result.toString());
     }
         
 
     @Override
     public String toString() {
-        return compute().toString();
+        return "CONCAT(" + _range.getFirstRow() + ";" + _range.getFirstColumn() + ":" + _range.getLastRow() + ";" + _range.getLastColumn() + ")";
     }
 
     @Override
-    Literal value() {
+    public Literal value() {
         return compute();
     }
 }

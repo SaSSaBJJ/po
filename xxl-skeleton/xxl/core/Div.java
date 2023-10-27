@@ -28,7 +28,7 @@ public class Div extends BinaryFunction {
     }
 
     @Override
-    Literal value() {
+    public Literal value() {
         return compute();
     }
     

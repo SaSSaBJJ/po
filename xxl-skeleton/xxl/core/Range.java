@@ -1,8 +1,9 @@
 package xxl.core;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Range {
+public class Range implements Serializable {
     
     private int _firstRow;
     private int _firstColumn;
@@ -36,12 +37,12 @@ public class Range {
         return _lastColumn;
     }
     
-    List<Cell> getCells() {
+    public List<Cell> getCells() {
         List <Cell>_cellsInRange = new ArrayList<Cell>();
-//        System.out.println("RANGE: getting cells in range" + this);
+//        System.out.println("RANGE: getting cells in range" + getFirstRow() + ";" + getFirstColumn() + ":" + getLastRow() + ";" + getLastColumn());
         for (Cell c: _spreadsheet.getCells()) {
-//            System.out.println("RANGE: getting cell" + c);
             if (c.getRow() >= _firstRow & c.getRow() <= _lastRow & c.getColumn() >= _firstColumn & c.getColumn() <= _lastColumn) {
+//                System.out.println("RANGE: getting cell " + c);
                 _cellsInRange.add(c);
             }
         }

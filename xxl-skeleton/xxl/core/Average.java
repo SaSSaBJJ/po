@@ -1,5 +1,7 @@
 package xxl.core;
 
+import java.util.List;
+
 public class Average extends IntervalFunction {
 
     private Range _range;
@@ -13,21 +15,25 @@ public class Average extends IntervalFunction {
 
     @Override
     public Literal compute() {
-        if (_range.getFirstRow()==_range.getLastRow()){
-            //FIX ME
-            return null;
+        int i = 0;
+        int sum = 0;
+        for (Cell c: _range.getCells()) {
+            if(c.getContent().asString().isEmpty()){
+                return new LiteralString("");
+            }
+            sum += c.getContent().asInt();
+            i ++;
         }
-        return null;
+        return new LiteralInteger(sum/i);
     }
-        
 
     @Override
     public String toString() {
-        return compute().toString();
+        return "AVERAGE(" + _range.getFirstRow() + ";" + _range.getFirstColumn() + ":" + _range.getLastRow() + ";" + _range.getLastColumn() + ")";
     }
 
     @Override
-    Literal value() {
+    public Literal value() {
         return compute();
     }
 }

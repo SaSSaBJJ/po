@@ -15,9 +15,12 @@ public abstract class Function extends Content {
        return compute().toString();
     }
 
+    public String asString(){
+        return toString();
+    }
+
     public int asInt(){
         return compute().asInt();
-       
     }
 
     public Literal Value(){

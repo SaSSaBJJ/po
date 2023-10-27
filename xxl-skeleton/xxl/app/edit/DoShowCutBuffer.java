@@ -15,6 +15,6 @@ class DoShowCutBuffer extends Command<Spreadsheet> {
   
   @Override
   protected final void execute() {
-    // FIXME implement command
+    _display.popup(_receiver.getCutBuffer());
   }
 }

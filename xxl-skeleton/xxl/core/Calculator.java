@@ -22,6 +22,7 @@ public class Calculator {
   // FIXME add more fields and methods if needed
   public void createNewSpreadsheet(int rows, int columns) {
     _spreadsheet = new Spreadsheet(rows, columns);
+    _filename = "";
   }
 
   /**
@@ -131,7 +132,7 @@ public class Calculator {
           objOut.writeObject(_filename);
           objOut.writeObject(_spreadsheet);
       }catch (Exception e){
-        System.out.println(e);
+        throw e;
       }
   }
   
@@ -146,7 +147,7 @@ public class Calculator {
    */
   public void saveAs(String filename) throws FileNotFoundException, MissingFileAssociationException, IOException {
     _filename = filename;
-//    System.out.println("CALULATOR: SAVING FILE: " + filename);
+//    System.out.println("CALULATOR: saving file: " + filename);
     save();
   }
   

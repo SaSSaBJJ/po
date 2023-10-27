@@ -54,14 +54,14 @@ class Parser {
 
     if (components.length == 2) {
       String[] address = components[0].split(";");
-      Content content = parseContent(components[1]);
+      String content = components[1];
       spreadsheet.insertContent(Integer.parseInt(address[0]), Integer.parseInt(address[1]), content);
     } else
       throw new UnrecognizedEntryException("Wrong format in line: " + line);
   }
 
   // parse the begining of an expression
-  Content parseContent(String contentSpecification) throws UnrecognizedEntryException {
+  public Content parseContent(String contentSpecification) throws UnrecognizedEntryException {
     char c = contentSpecification.charAt(0);
 //    System.out.println("PARSER: parsing content: " + contentSpecification);
      try {

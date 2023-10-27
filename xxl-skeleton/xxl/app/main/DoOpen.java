@@ -6,7 +6,10 @@ import pt.tecnico.uilib.menus.CommandException;
 import xxl.app.exception.FileOpenFailedException;
 import xxl.core.Calculator;
 // FIXME import classes
+import xxl.core.exception.MissingFileAssociationException;
 import xxl.core.exception.UnavailableFileException;
+
+import java.io.IOException;
 
 /**
  * Open existing file.
@@ -15,12 +18,21 @@ class DoOpen extends Command<Calculator> {
 
   DoOpen(Calculator receiver) {
     super(Label.OPEN, receiver);
-    addStringField("file", Message.openFile());
   }
   
   @Override
   protected final void execute() throws CommandException {
-    String filename = stringField("file");
+    boolean save = false;
+    String filename = "";
+//        System.out.println("SPREAD::::" +  _receiver.getFilename());
+    if(_receiver.getFilename().isEmpty() && _receiver.getSpreadsheet() != null){
+      save = Form.requestString(Message.saveBeforeExit()).equals("s");
+    }
+    if(save){
+      filename = Form.requestString(Message.newSaveAs());
+    }
+
+    filename = Form.requestString(Message.openFile());
     try {
       _receiver.load(filename);
     } catch (UnavailableFileException | ClassNotFoundException e) {

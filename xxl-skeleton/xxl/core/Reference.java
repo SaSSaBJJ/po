@@ -20,7 +20,7 @@ public class Reference extends Content{
             return _row + ";" + _column;
     }
 
-    Literal value() {
+    public Literal value() {
        List<Cell> _cells = _spreadsheet.getCells();
        for(Cell c: _cells){
         if (c.getRow()==_row & c.getColumn()==_column){
