@@ -1,6 +1,7 @@
 package xxl.app.edit;
 
 import pt.tecnico.uilib.menus.Command;
+import xxl.app.exception.InvalidCellRangeException;
 import xxl.core.Spreadsheet;
 // FIXME import classes
 
@@ -14,7 +15,7 @@ class DoShowCutBuffer extends Command<Spreadsheet> {
   }
   
   @Override
-  protected final void execute() {
-    _display.popup(_receiver.getCutBuffer());
+  protected final void execute() throws InvalidCellRangeException {
+      _display.popup(_receiver.getCutBuffer());
   }
 }

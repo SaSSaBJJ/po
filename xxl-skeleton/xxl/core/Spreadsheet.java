@@ -7,6 +7,7 @@ import java.util.*;
 import java.io.Serial;
 import java.io.Serializable;
 
+import xxl.app.exception.InvalidCellRangeException;
 import xxl.core.exception.UnrecognizedEntryException;
 
 /**
@@ -58,7 +59,10 @@ public class Spreadsheet implements Serializable {
     return _changed;
   }
 
-  public List<Cell> getCutBuffer(){
+  public List<Cell> getCutBuffer() throws InvalidCellRangeException {
+    if(_cutBuffer.size() > 5){
+      throw new InvalidCellRangeException("numero invalido de celulas no cut buffer");
+    }
     return _cutBuffer;
   }
 
